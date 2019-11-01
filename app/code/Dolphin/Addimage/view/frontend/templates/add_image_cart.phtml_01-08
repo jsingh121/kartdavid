@@ -1,0 +1,46 @@
+<?php 
+$id = $this->getProductId();
+$product = $this->getLoadProduct($id);
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$_product = $objectManager->get('Magento\Catalog\Model\Product')->load($id);
+echo "<pre>";
+print_r($_product->getData());
+/*echo "Id". $product->getEntityId()."<br>";
+echo "Name".$product->getName();*/
+$cartHelper = $this->helper('Magento\Checkout\Helper\Cart');
+$addToCartUrl = $cartHelper->getAddUrl($product);
+?>
+
+<form data-product-sku="<?php echo $product->getSku() ?>"
+          action="<?php echo $addToCartUrl; ?>" method="post">
+<input type="hidden" name="product" value="<?php echo $this->getProductId() ?>" />
+<input type="hidden" name="selected_configurable_option" value="" />
+<?php echo $block->getBlockHtml('formkey') ?>
+<div class="custom_adddiv container">
+	<div class="custom_textarea">
+		<h1 class="custom_addheading">Tell us about your cart so we can make your sticker kit fit</h1>
+		<textarea rows="4" cols="30" name="custom_textarea" placeholder="For example: Tony Kart with OTK M6 bdywork">
+		</textarea>
+		<button type="submit" title="Submit" class="action primary tocart">
+	    	<span>Submit</span>
+		</button>
+	</div>
+	<div class="custom_upload_block" style="display: none;">
+		<h1 class="custom_addheading">Upload an image of your kart</h1>
+		<p>And we will guarantee it will fit your kart.</p>
+		<button type="submit" title="Choose file" class="action primary tocart">
+	    	<span>Choose file</span>
+		</button>
+	</div>
+	<p class="upload_image_box">Or, upload an image of your kart & we will guarantee a perfect fit > </p>
+</div>
+</form>
+<script type="text/javascript">
+require(['jquery'], function($){
+    jQuery(".upload_image_box").on("click", function(){
+    	jQuery(".custom_textarea").css( "display", "none" );
+    	jQuery(".custom_upload_block").css( "display", "block" );
+    });
+});
+</script>

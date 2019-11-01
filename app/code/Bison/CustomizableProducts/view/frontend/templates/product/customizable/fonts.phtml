@@ -1,0 +1,13 @@
+<?php
+/** @var \Bison\CustomizableProducts\Block\Customizer\Inputs $block */
+?>
+<div class="svg-fonts">
+    <style>
+        <?php foreach($block->getFonts() as $font): ?>
+            @font-face {
+                font-family: "<?php echo $font['name'];?>";
+                src: url("<?php echo $font['base64_url'];?>");
+            }
+        <?php endforeach;?>
+    </style>
+</div>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Bison_CustomizableProduct::logo_title" title="Logos" module="Bison_CustomizableProducts" sortOrder="10" resource="Magento_Backend::system" parent="Bison_Customizer::title"/>
+        <add id="Bison_CustomizableProduct::logos" title="Manage Logos" module="Bison_CustomizableProducts" sortOrder="20" action="bison/logo" resource="Magento_Backend::system" parent="Bison_CustomizableProduct::logo_title"/>
+        <add id="Bison_CustomizableProduct::logo_add" title="Add Logo" module="Bison_CustomizableProducts" sortOrder="25" action="bison/logo/edit" resource="Magento_Backend::system" parent="Bison_CustomizableProduct::logo_title"/>
+
+        <add id="Bison_CustomizableProduct::categories_title" title="Categories" module="Bison_CustomizableProducts" sortOrder="20" resource="Magento_Backend::system" parent="Bison_Customizer::title"/>
+        <add id="Bison_CustomizableProduct::categories" title="Manage Logo Categories" module="Bison_CustomizableProducts" sortOrder="30" action="bison/category" resource="Magento_Backend::system" parent="Bison_CustomizableProduct::categories_title"/>
+        <add id="Bison_CustomizableProduct::category_add" title="Add Logo Category" module="Bison_CustomizableProducts" sortOrder="35" action="bison/category/edit" resource="Magento_Backend::system" parent="Bison_CustomizableProduct::categories_title"/>
+    </menu>
+</config>

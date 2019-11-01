@@ -1,0 +1,9 @@
+<div data-bind="html: window.checkoutConfig.cms_block_message_termsandprivacy"></div>
+<div ifnot="isContextCheckout()" class="primary">
+    <button class="action primary checkout"
+            type="submit"
+            data-bind="click: continueToPayPal, enable: isPlaceOrderActionAllowed()"
+            disabled>
+        <span data-bind="i18n: 'Place Order'"></span>
+    </button>
+</div>

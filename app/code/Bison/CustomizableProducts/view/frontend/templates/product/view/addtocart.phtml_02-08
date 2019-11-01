@@ -1,0 +1,120 @@
+<?php
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $currency = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
+    $currencyCode = $currency->getStore()->getCurrentCurrencyCode();
+    $currencySymbol = $objectManager->create('Magento\Directory\Model\CurrencyFactory')->create()->load($currencyCode)->getCurrencySymbol();
+?>
+<?php $_product = $block->getProduct(); ?>
+<?php $buttonTitle = __('Add to Cart'); ?>
+<?php if ($_product->isSaleable()): ?>
+    <div class="box-tocart container">
+        <div class="fieldset">
+            <?php /*if ($block->shouldRenderQuantity()): ?>
+                <div class="count_quanity">
+                    <input type="text" name="qty" class="input-text qty qtyy" maxlength="12" value="1" title="Qty" min="1"  data-validate="{&quot;required-number&quot;:true,&quot;validate-item-quantity&quot;:{&quot;minAllowed&quot;:1}}">
+                    <a href="javascript:void(0)" class="up_btn"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
+                    <a href="javascript:void(0)" class="down_btn"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                </div>
+                 
+                <?php $shrtdesc =  $_product->getData('short_description'); ?>
+                <?php if ($shrtdesc): ?>
+                    <div class="shortDesc"><?php echo $shrtdesc; ?></div>
+                <?php endif; ?>
+
+            <?php endif; */ ?>
+            <div class="error-message row" style="display: none;">
+                <div class="col-12"><?= __('You must select a bodywork') ?></div>
+            </div>
+            <div class="actions row">
+    <!--                CUSTOMISE BUTTON ADDED-->
+                <div class="edit-design col-md-5">
+                    <div class="change-design-button-loader">
+                        <img src="<?php echo $block->getViewFileUrl('Bison_CustomizableProducts/css/img/loader.gif');?>">
+                    </div>
+                    <button type="button"
+                            title="<?= __('Edit Design') ?>"
+                            class="action primary customize"
+                            id="customize-product-button"
+                            style="display: none">
+                        <span class="button-text">
+                            <span class="circle red"></span>
+                            <span class="circle blue"></span>
+                            <span class="circle orange"></span>
+                            <?= __('Edit Design') ?>
+                        </span>
+                        <?php foreach ($_product->getOptions() as $_option): ?>
+                            <?php if ($_option->getTitle() == 'CustomizationPrice' && $_option->getType() == \Magento\Ui\Component\Form\Element\Checkbox::NAME): ?>
+                                <small class="additional-price"><?= '+ ' . $currencySymbol . number_format(current($_option->getValues())->getPrice(), 2); ?></small>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </button>
+                </div>
+                 <div class="col-md-5">
+                     <button type="submit"
+                             title="<?= /* @escapeNotVerified */ $buttonTitle ?>"
+                             class="action primary tocart"
+                             id="product-addtocart-button">
+                         <span><?= /* @escapeNotVerified */ $buttonTitle ?></span>
+                     </button>
+                </div>
+                <?php if ($block->shouldRenderQuantity()): ?>
+                    <div class="field qty col-md-2">
+                        
+                        <div class="control">
+                            <input type="number"
+                                   name="qty"
+                                   id="qty"
+                                   value="<?= /* @escapeNotVerified */ $block->getProductDefaultQty() * 1 ?>"
+                                   title="<?= /* @escapeNotVerified */ __('Qty') ?>"
+                                   class="input-text qty"
+                                   data-validate="<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                                   />
+                        </div>
+                    </div>
+                <?php endif; ?>
+                <?php /*<div class="customization-info col-xs-12">
+                    <p><?= __('This product is custom-made to order within 4 days of confirming your design.') ?></p>
+                    <p><?= __('Use the Online Designer to edit the colours, name, number & logos to make the design perfect for you.') ?></p>
+                    <p><?= __('Tell us your kart bodywork after adding to the cart.') ?></p>
+                </div> */?>
+                <?= $block->getChildHtml('', true) ?>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+<?php if ($block->isRedirectToCartEnabled()) : ?>
+    <script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/product/view/validation": {
+                "radioCheckboxClosest": ".nested"
+            }
+        }
+    }
+</script>
+<?php else : ?>
+    <script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/js/validate-product": {}
+        }
+    }
+</script>
+<?php endif; ?>
+
+<script>
+    require(["jquery"], function($){
+        $(function() {
+            var flag=1;
+            $('.product-custom-option').each(function(){
+                if (flag){
+
+                    $('#'+this.id).parent().append('<div class=count_quanity>'+$(".count_quanity").html()+'</div>');
+                    $(".box-tocart .count_quanity").html('').hide();
+                    flag=0
+                }
+            })
+
+        });
+    });
+</script>

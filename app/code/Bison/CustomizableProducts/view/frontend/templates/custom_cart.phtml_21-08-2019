@@ -1,0 +1,88 @@
+<?php
+$productID = $block->getProductId();
+$itemid = $block->getItemId();
+$quoteId = $block->getQuoteId();
+
+$product = $this->getLoadProduct($productID);
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+//$product = $objectManager->get('Magento\Catalog\Model\Product')->load($productID);
+$customOptions = $objectManager->get('Magento\Catalog\Model\Product\Option')->getProductOptionCollection($product);
+$options = $block->getQuoteItems($quoteId);
+$qty = $block->getItemQty($quoteId);
+//echo "string".$product->getSku();
+?>
+
+<form data-product-sku="<?php echo $block->escapeHtml($product->getSku()) ?>" action="<?php echo $this->getUrl('checkout/cart/updateItemOptions/id/'.$itemid)?>" method="post" id="product_addtocart_form" enctype="multipart/form-data">
+<input type="hidden" name="product" value="<?php echo $productID ?>" />
+<input type="hidden" name="selected_configurable_option" value="" />
+<input type="hidden" name="related_product" id="related-products-field" value="" />
+<input type="hidden" name="qty" value="<?php echo $qty ?>" />
+<?php echo $block->getBlockHtml('formkey') ?>
+
+<div class="custom_adddiv container" id="product-options-wrapper">
+<?php foreach ($customOptions as $value) { 
+	
+    if($value['type'] == 'drop_down') { 
+    	$values1 = $value->getValues(); ?>
+		<select class="custom_select_option" name="options[<?php echo $value['option_id'] ?>]" id="select_<?php echo $value['option_id'] ?>" class=" product-custom-option admin__control-select" title="" data-selector="options[<?php echo $value['option_id'] ?>]">
+		<option value="">Choose your <?php echo $value->getDefaultTitle() ?></option>
+		<?php foreach($values1 as $value2) {
+
+			$valueData = $value2->getData(); ?>
+			<?php if($valueData['price'] > 0) { ?>
+				<option value="<?php echo $valueData['option_type_id'];?>" price="0" <?php if(in_array($valueData['option_type_id'], $options)) echo "selected='selected'" ?>><?php echo $valueData['title'].' + '.$valueData['price'] ?></option>	
+			<?php } else { ?>
+				<option value="<?php echo $valueData['option_type_id'];?>" price="0" <?php if(in_array($valueData['option_type_id'], $options)) echo "selected='selected'" ?>><?php echo $valueData['title'] ?></option>
+			<?php } ?>
+			<?php } ?>
+		</select>
+	<?php }
+
+	elseif($value['type'] == 'area') { ?>
+		<div id="Div1" class="custom_textarea">
+			<h1 class="custom_addheading">Tell us about your cart so we can make your sticker kit fit</h1>
+				<textarea id="options_<?php echo $value['option_id'] ?>_text" class="product-custom-option" name="options[<?php echo $value['option_id'] ?>]" data-selector="options[<?php echo $value['option_id'] ?>]" rows="5" cols="30"></textarea>
+		</div>
+	<?php }
+
+	elseif($value['type'] == 'file') { ?>
+		<div id="Div2" class="custom_upload_block" style="display: none;">
+			<h1 class="custom_addheading">Upload an image of your kart</h1>
+			<p>And we will guarantee it will fit your kart.</p>
+			<input type="hidden" name="options_<?php echo $value['option_id'] ?>_file_action" value="save_new">
+			<input type="file" name="options_<?php echo $value['option_id'] ?>_file" id="options_<?php echo $value['option_id'] ?>_file" class="product-custom-option">
+			<p class="choose_file">Choose file</p>
+			<div style="display:none;" class="img-preview">
+				<p></p>
+        	</div>
+		</div>
+	<?php }
+	 } ?>
+	<button type="submit" title="Submit" class="action primary tocart">
+	   	<span>Submit</span>
+	</button>
+	<div id="fold">
+		<p id="fold_p" class="upload_image_box"><?php echo utf8_encode('Or, upload an image of your kart & we will guarantee a perfect fit >'); ?></p>
+	</div>
+</div>
+</form>
+<script type="text/javascript">
+require(['jquery','jquery/ui'], function($){
+	$(document).ready(function () {
+	    $("#fold").click(function () {
+	    	$('.custom_textarea, .custom_upload_block').toggle();
+	        $("#fold_p").fadeOut(function () {
+	            $("#fold_p").text(($("#fold_p").text() == 'Or, upload an image of your kart & we will guarantee a perfect fit >') ? 'Or, Add text of your kart & we will guarantee a perfect fit >' : 'Or, upload an image of your kart & we will guarantee a perfect fit >').fadeIn();
+	        })
+	    });
+	});
+
+	$('#options_<?php echo $value['option_id'];?>_file').change(function(){
+	 	var value = $(this).val();
+	 	var last = value.split(/[\\\/]/).pop();
+	 	$(".img-preview").css("display","block");
+	 	$(".img-preview p").html(last);
+	});
+
+});
+</script>

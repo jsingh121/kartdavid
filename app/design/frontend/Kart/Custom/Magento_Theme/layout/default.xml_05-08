@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page layout="3columns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="default_head_blocks"/>
+    <body>   
+        
+    <referenceBlock name="header.panel" remove="true" />
+    <referenceBlock name="footer" remove="true"/>
+    <referenceBlock name="navigation.sections" remove="false"/>
+    
+    
+    <referenceContainer name="header.container" htmlClass="header"></referenceContainer>
+
+    <referenceContainer name="red.block">
+        <block class="Magento\Cms\Block\Block" name="RedBlockHeader">
+            <arguments>
+                <argument name="block_id" xsi:type="string">RedBlockHeader</argument>
+            </arguments>
+        </block>        
+    </referenceContainer>          
+    <referenceContainer name="page.wrapper">
+        <container name="red.block" as="redblock" label="Red Block" after="header.container"/>
+    </referenceContainer>
+    
+    <referenceContainer name="header-wrapper" htmlClass="content container"></referenceContainer>
+    
+    <container name="header-menu" label="Header Menu" as="header-menu" htmlTag="div" htmlClass="menu"></container>
+    <move element="navigation.sections" destination="header-menu"/>
+    
+    <move element="header-menu" destination="header-wrapper" after="logo"/>
+    
+    <container name="header-top-info" label="Header Top Info" as="header-top-info" htmlTag="div" htmlClass="top-info"></container>
+    <move element="top.search" destination="header-top-info"/>
+    <move element="minicart" destination="header-top-info" after="top.search"/>
+    
+    <move element="header-top-info" destination="header-wrapper" after="logo"/>
+    
+    
+    <referenceContainer name="footer-container" htmlClass="footer">
+        <block class="Magento\Cms\Block\Block" name="Footer">
+            <arguments>
+                <argument name="block_id" xsi:type="string">Footer</argument>
+            </arguments>
+        </block>
+    </referenceContainer>
+       
+    </body>
+</page>
+

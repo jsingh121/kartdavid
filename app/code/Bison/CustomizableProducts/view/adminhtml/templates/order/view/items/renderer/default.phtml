@@ -1,0 +1,20 @@
+<?php
+/** @var \Magento\Sales\Block\Adminhtml\Order\View\Items\Renderer\DefaultRenderer $block */
+$item = $block->getItem();
+$block->setPriceDataObject($item);
+$i = 0;
+$columns = $block->getColumns();
+$lastItemNumber = count($columns);
+?>
+<tr>
+    <?php foreach ($columns as $columnName => $columnClass): $i++;?>
+        <td class="<?php echo $columnClass ?><?php echo ($i === $lastItemNumber ? ' last' : '') ?>"><?php echo $block->getColumnHtml($item, $columnName) ?></td>
+    <?php endforeach; ?>
+    <td>
+        <?php if($item->getData('generated_svg')):?>
+            <a href="<?php echo $block->getUrl('bison/svg/download', ['item_id' => $item->getId()]);?>" target="_blank">
+                <button><?php echo __('Download SVG');?></button>
+            </a>
+        <?php endif; ?>
+    </td>
+</tr>

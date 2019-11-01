@@ -1,0 +1,46 @@
+<?php
+/** @var \Bison\CustomizableProducts\Block\Customizer\Inputs $block*/
+
+?>
+<div class="colors-in-design options">
+    <span class="customizable-option-title"><?= __('Colours in design'); ?></span>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 scrollable">
+            <?php for ($i = 1; $i <= 3; $i++): ?>
+                <div class="picked-colors col-md-4 col-sm-4 col-lg-4 col-xs-4" data-layer-id="<?= $i ?>">
+                    <div class="color"></div>
+                    <div class="color-hash">
+                        <span></span>
+                        <small class="additional-price"></small>
+                    </div>
+                </div>
+            <?php endfor ?>
+            <div class="color-picker colors">
+                <?php for ($i = 1; $i <= 3; $i++): ?>
+                    <?php $layerColors = $this->getLayerColors($i); ?>
+                    <?php foreach ($layerColors as $color): ?>
+                        <?php $colorName = $color->getColorName() ? $color->getColorName() : '#' . $color->getTitle(); ?>
+                        <?php $additionalPrice = $color->getPrice() != 0 ? '+ ' . $block->getCurrentCurrencySymbol() . number_format($color->getPrice(), 2) : '' ?>
+                        <div data-layer="<?= $i ?>" class="available-colors col-md-3 col-sm-3 col-lg-3 col-xs-3 <?php if ($color->getIsFluorescent() === "1"): ?>fluorescent-color<?php endif; ?>">
+                            <label for="layerColor<?php echo strtoupper($color->getTitle()); ?>">
+                                <div style="background: <?php echo '#'.$color->getTitle() ?>" class="color"></div>
+                                <div class="color-hash" data-color="<?= '#'.strtoupper($color->getTitle()) ?>" data-color-name="<?= $colorName ?>" data-additional-price="<?= $additionalPrice ?>"><span><?= $colorName ?></span></div>
+                            </label>
+                            <input id="layerColor<?php echo strtoupper($color->getTitle()); ?>" type="radio" name="layer_color" value="<?php echo '#'.$color->getTitle(); ?>" />
+                        </div>
+                    <?php endforeach; ?>
+                <?php endfor; ?>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="colors-button">
+            <button type="button" id="colors-palette-confirm"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="colors-button">
+            <button type="button" id="colors-cancel"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="btn_for_brochure">
+    <a href="javascript:void(0);" id="request_free_brochure">Request Free Brochure</a>
+</div>
+
+<div id="popup-mpdal" style="display: none;">
+	<h4 class="popup-title">Get free samples</h4>
+    <?php echo $this->getLayout()
+          ->createBlock('Magento\Cms\Block\Block')
+          ->setBlockId('request_free_brochure')
+          ->toHtml(); ?>
+</div>
+
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function(
+            $,
+            modal
+        ) {
+            var options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                buttons: false
+            };
+
+            var popup = modal(options, $('#popup-mpdal'));
+            $("#request_free_brochure").on('click',function(){
+                $("#popup-mpdal").modal("openModal");
+            });
+            $("#request_free_brochure_bottom").on('click',function(){
+                $("#popup-mpdal").modal("openModal");
+            });
+
+        }
+    );
+</script>

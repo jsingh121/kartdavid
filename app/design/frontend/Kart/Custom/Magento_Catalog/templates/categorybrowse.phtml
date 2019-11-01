@@ -1,0 +1,11 @@
+<?php 
+   $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+   $category = $objectManager->get('Magento\Framework\Registry')->registry('current_category');//get current category
+  
+   $catName =  $category->getName();
+?>
+<?php if($catName): ?>
+<div class="browse">
+       <h1 class="title">Browse our <?php echo $catName; ?> designs</h1>
+</div>
+<?php endif; ?>

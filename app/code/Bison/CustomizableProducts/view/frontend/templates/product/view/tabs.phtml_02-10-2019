@@ -1,0 +1,40 @@
+<?php $inspirationImages = $this->getInspirationImages() ?>
+<?php $designImages = $this->getDesignImages() ?>
+<?php $display = (!count($inspirationImages) > 0 && !count($designImages) > 0) ? 'none' : 'block' ?>
+
+<div class="container product-page-tabs" style="display: <?= $display ;?>">
+    <div class="row">
+        <?php if (count($inspirationImages) > 0): ?>
+            <div id="inspiration" class="col-xs-6 tab-header active">
+                <span><?= __('Inspiration'); ?></span>
+            </div>
+        <?php endif ?>
+        <?php if (count($designImages) > 0): ?>
+            <div id="my-designs" class="col-xs-6 tab-header <?= (count($inspirationImages) > 0) ? '' : 'active' ?>">
+                <span><?= __('My Designs'); ?></span>
+            </div>
+        <?php endif ?>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 tab-content inspiration" style="display: <?= (count($inspirationImages) > 0) ? 'flex' : 'none' ?>">
+            <?php if (count($inspirationImages) > 0): ?>
+                <?php foreach ($inspirationImages as $image): ?>
+                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-6"><img design-id="<?= $image->getId(); ?>"
+                                                                          class="img-responsive"
+                                                                          src="<?= $image->getInspirationFileUrl(); ?>"/>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif ?>
+        </div>
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 tab-content my-designs" style="display: <?= (count($inspirationImages) > 0) ? 'none' : 'flex' ?>">
+            <?php if (count($designImages) > 0): ?>
+                <?php foreach ($designImages as $image): ?>
+                    <div class="col-md-3 col-lg-3 col-sm-3 col-xs-6"><img design-id="<?= $image->getId(); ?>"
+                                                                          class="img-responsive"
+                                                                          src="<?= $image->getDesignFileUrl(); ?>"/>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif ?>
+        </div>
+    </div>
+</div>

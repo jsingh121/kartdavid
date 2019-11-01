@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Bison_Customizer::title" title="Customizer" module="Bison_SvgFonts" sortOrder="50" resource="Magento_Backend::system"/>
+        <add id="Bison_SvgFonts::title" title="Fonts" module="Bison_SvgFonts" sortOrder="1" resource="Magento_Backend::system" parent="Bison_Customizer::title"/>
+        <add id="Bison_SvgFonts::fonts" title="Manage Fonts" module="Bison_SvgFonts" sortOrder="10" action="bison_svgfonts/font" resource="Magento_Backend::system" parent="Bison_SvgFonts::title"/>
+        <add id="Bison_SvgFonts::font_add" title="Add Font" module="Bison_SvgFonts" sortOrder="15" action="bison_svgfonts/font/edit" resource="Magento_Backend::system" parent="Bison_SvgFonts::title"/>
+    </menu>
+</config>

@@ -1,0 +1,72 @@
+<?php $positions = ['position 1', 'position 2', 'position 3', 'position 4', 'position 5', 'position 6']; ?>
+<div id="logo-panel-container">
+
+    <div class="logo-form">
+        <form method="post" id="logo-upload">
+            <div class="logo options">
+                <span class="customizable-option-title"><?= __('Logo'); ?></span>
+
+                <span class="message base"></span>
+                <span class="remove-logo base"><i class="fa fa-trash"></i></span>
+                <div class="uploaded-logos mobile-scrollable"></div>
+                <div class="row action-button">
+                    <div class="logo-select">
+                        <label><?= __('Select logo') ?></label>
+                    </div>
+                </div>
+                <div class="row action-button">
+                    <div class="logo-upload">
+                        <label for="logo-file"> <?= __('Upload logo') ?></label>
+                        <input type="file" id="logo-file" name="upload-logo[]"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="colors-button">
+                        <button type="button" id="logo-cancel"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="logo-adjustments-panel" style="display:none">
+        <div class="panel-title"><?= __('Adjust Logo'); ?></div>
+        <div class="visible-md visible-lg">
+            <div class="scale-panel row">
+                <div class="col-md-5 scale-panel-label"><span><?= __('Adjust Scale'); ?></span></div>
+                <div class="col-md-3">
+                    <button class="logo-scale-up"><i class="fa fa-plus"></i></button>
+                </div>
+                <div class="col-md-3">
+                    <button class="logo-scale-down"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="rotation-panel row">
+                <div class="col-md-5 rotation-panel-label"><span><?= __('Adjust Rotation'); ?></span></div>
+                <div class="col-md-3">
+                    <button class="logo-rotate-left"><i class="fa fa-undo"></i></button>
+                </div>
+                <div class="col-md-3">
+                    <button class="logo-rotate-right"><i class="fa fa-repeat"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="hidden-md hidden-lg row">
+            <div class="col-xs-3">
+                <button class="logo-rotate-left"><i class="fa fa-undo"></i></button>
+            </div>
+            <div class="col-xs-3">
+                <button class="logo-rotate-right"><i class="fa fa-repeat"></i></button>
+            </div>
+            <div class="col-xs-3 ">
+                <button class="logo-scale-up"><i class="fa fa-plus"></i></button>
+            </div>
+            <div class="col-xs-3">
+                <button class="logo-scale-down"><i class="fa fa-minus"></i></button>
+            </div>
+        </div>
+
+    </div>
+
+</div>

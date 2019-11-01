@@ -1,0 +1,42 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="checkout_cart_item_renderers"/>
+    <head>
+    </head>
+    <body>
+    	<referenceBlock name="checkout.cart.totals">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <!-- UI component customizations -->
+                    <item name="components" xsi:type="array">
+                        <item name="block-totals" xsi:type="array">
+                            <item name="children" xsi:type="array">
+                                <item name="grand-total" xsi:type="array">
+                                    <item name="config" xsi:type="array">
+                                        <item name="title" xsi:type="string" translate="true">Subtotal:</item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+        <referenceContainer name="cart.summary">
+            <container name="payment" htmlTag="div" htmlClass="payment" after="cart.summary">
+                    <block class="Magento\Cms\Block\Block" name="payment-icons">
+                        <arguments>
+                            <argument name="block_id" xsi:type="string">payment-icons</argument>
+                        </arguments>
+                    </block>
+            </container>
+        </referenceContainer>
+    	<referenceBlock name="checkout.cart.item.renderers.default.actions.edit" remove="true" />
+        <referenceBlock name="checkout.cart.item.renderers.simple.actions.edit" remove="true" />
+        <referenceBlock name="checkout.cart.item.renderers.bundle.actions.edit" remove="true" />
+        <referenceBlock name="checkout.cart.item.renderers.downloadable.actions.edit" remove="true" />
+        <referenceBlock name="checkout.cart.item.renderers.grouped.actions.edit" remove="true" />
+        <referenceBlock name="checkout.cart.item.renderers.configurable.actions.edit" remove="true" />
+        <referenceBlock name="checkout.cart.item.renderers.virtual.actions.edit" remove="true" />
+        <referenceContainer name="footer-container" remove="true" />
+    </body>
+</page>

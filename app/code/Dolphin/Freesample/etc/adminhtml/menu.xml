@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Dolphin_Freesample::manager" title="Free Sample" module="Dolphin_Freesample" sortOrder="15" resource="Dolphin_Freesample::manager" />
+        <add id="Dolphin_Freesample::info" title="Sample Order" module="Dolphin_Freesample" sortOrder="15" parent="Dolphin_Freesample::manager" action="freesample/data/index" resource="Dolphin_Freesample::manager"/>
+    </menu>
+</config>

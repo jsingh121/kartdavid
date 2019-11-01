@@ -1,0 +1,43 @@
+<?php 
+   $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+   $category = $objectManager->get('Magento\Framework\Registry')->registry('current_category');//get current category
+   $imgurl = $category->getImageUrl(); 
+
+   
+   $descBlock = $objectManager->get('\Magento\Catalog\Block\Category\View');
+?>
+
+<?php if ($_description = $descBlock->getCurrentCategory()->getDescription()): ?>
+        <div class="cat">
+            <?php /* @escapeNotVerified */ echo $this->helper('Magento\Catalog\Helper\Output')->categoryAttribute($descBlock->getCurrentCategory(), $_description, 'description') ?>
+        </div>
+<?php endif; ?>
+
+<?php if($imgurl): ?>
+<div class="cat-banner">
+	<div class="bnr-caption"> 
+		<div class=" centered"> 
+			<div class="bnr-txt"> 
+			<h1><?php if($category->getName()) { echo $category->getName(); } ?> Graphics</h1>
+			<?php
+				echo $this->getLayout()
+				->createBlock('Magento\Cms\Block\Block')
+				->setBlockId('feefo_review')
+				->toHtml();
+			?> 
+			<!-- <div class="rating"> 
+			      <span class="fa fa-star"></span> 
+			      <span class="fa fa-star"></span> 
+			      <span class="fa fa-star"></span> 
+			      <span class="fa fa-star"></span> 
+			      <span class="fa fa-star"></span> 54,212 Reviews
+			</div> --><!--end rating--> 
+			</div><!--end slid-txt--> 
+		</div><!--end centered--> 
+	</div> <!--end bnr-caption-->
+    <img src="<?php echo $imgurl; ?>" alt="">
+</div>
+<?php endif; ?>
+
+
+

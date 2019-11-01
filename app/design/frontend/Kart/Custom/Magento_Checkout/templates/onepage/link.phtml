@@ -1,0 +1,21 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+?>
+<?php if ($block->isPossibleOnepageCheckout()):?>
+    <button type="button"
+            data-role="proceed-to-checkout"
+            title="<?= /* @escapeNotVerified */ __('Checkout') ?>"
+            data-mage-init='{"Magento_Checkout/js/proceed-to-checkout":{"checkoutUrl":"<?= /* @escapeNotVerified */ $block->getCheckoutUrl() ?>"}}'
+            class="action primary checkout<?= ($block->isDisabled()) ? ' disabled' : '' ?>"
+            <?php if ($block->isDisabled()):?>disabled="disabled"<?php endif; ?>>
+        <span><?= /* @escapeNotVerified */ __('Checkout') ?><img class="ch_lock" src="<?php echo $block->getViewFileUrl('images/checkout_lock.png') ?>" /></span>
+    </button>
+<?php endif?>
+<div class="continue_shopping">
+    or <a href="<?php echo $block->getUrl(); ?>" title="continue shopping" class="continue_shopping_link"><span>continue shopping</span></a>
+</div>

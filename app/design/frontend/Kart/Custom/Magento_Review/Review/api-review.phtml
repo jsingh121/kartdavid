@@ -1,0 +1,10 @@
+<?php
+
+$data = file_get_contents('https://api.feefo.com/api/10/reviews/all?merchant_identifier=kartdavid-ltd&page_size=3');
+
+$data = json_decode($data,true);
+echo "<pre>";
+print_r($data);
+echo "</pre>";
+
+?>

@@ -1,0 +1,80 @@
+<?php
+/** @var \Bison\CustomizableProducts\Block\Customizer\Inputs $block */
+?>
+<div class="overlay">
+    <div class="race-number">
+        <div class="colors-button overlay">
+            <button type="button" class="cancel"><i class="fa fa-times" aria-hidden="true"></i></button>
+            <button type="button" class="confirm"><i class="fa fa-check" aria-hidden="true"></i></button>
+        </div>
+        <div class="field">
+            <input type="number" id="validate-input" class="overlay-input" maxlength="3"
+                   oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                   onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+            <span><?= __('Max 3 characters'); ?></span>
+        </div>
+    </div>
+    <div class="number-font">
+        <div class="colors-button overlay">
+            <button type="button" class="cancel"><i class="fa fa-times" aria-hidden="true"></i></button>
+            <button type="button" class="confirm"><i class="fa fa-check" aria-hidden="true"></i></button>
+        </div>
+        <div class="field select2-overlay">
+            <select class="overlay-input" id="number-font-select">
+                <?php $i = 0; foreach ($block->getFonts(\Bison\SvgFonts\Model\Font\Options::NUMBER_CODE) as $font): ?>
+                    <option style="font-family: <?php echo $font['name']?>" <?php if ($i++ === 0): ?>selected<?php endif; ?> value="<?php echo $font['name'];?>" data-url="<?php echo $font['url'];?>"><?php echo __('123');?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+    <div class="driver-name">
+        <div class="colors-button overlay">
+            <button type="button" class="cancel"><i class="fa fa-times" aria-hidden="true"></i></button>
+            <button type="button" class="confirm"><i class="fa fa-check" aria-hidden="true"></i></button>
+        </div>
+        <div class="field">
+            <input class="overlay-input" maxlength="<?php echo $block->getMaxNameLength();?>">
+            <span><?= __(sprintf('Max %d characters', $block->getMaxNameLength())); ?></span>
+        </div>
+    </div>
+    <div class="name-position">
+        <div class="colors-button overlay">
+            <button type="button" class="cancel"><i class="fa fa-times" aria-hidden="true"></i></button>
+            <button type="button" class="confirm"><i class="fa fa-check" aria-hidden="true"></i></button>
+        </div>
+        <div class="field select2-overlay">
+            <select class="overlay-input" id="name-position-select">
+                <option selected value="1">Position #1</option>
+                <option value="2">Position #2</option>
+                <option value="3">Position #3</option>
+            </select>
+        </div>
+    </div>
+    <div class="name-font">
+        <div class="colors-button overlay">
+            <button type="button" class="cancel"><i class="fa fa-times" aria-hidden="true"></i></button>
+            <button type="button" class="confirm"><i class="fa fa-check" aria-hidden="true"></i></button>
+        </div>
+        <div class="field select2-overlay">
+            <select class="overlay-input" id="name-font-select">
+                <?php $i = 0; foreach ($block->getFonts(\Bison\SvgFonts\Model\Font\Options::NAME_CODE) as $font): ?>
+                    <option style="font-family: <?php echo $font['name']?>" <?php if ($i++ === 0): ?>selected<?php endif; ?> value="<?php echo $font['name'];?>" data-url="<?php echo $font['url'];?>"><?php echo __('Your Name');?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+</div>
+<style>
+    <?php $i = 1; foreach ($block->getFonts(\Bison\SvgFonts\Model\Font\Options::NUMBER_CODE) as $font): ?>
+        .select2-results__options[id*="number-font-select"] > li:nth-of-type(<?php echo $i++?>) {
+            font-family: '<?php echo $font['name']?>';
+        }
+    <?php endforeach; ?>
+
+    <?php $i = 1; foreach ($block->getFonts(\Bison\SvgFonts\Model\Font\Options::NAME_CODE) as $font): ?>
+        .select2-results__options[id*="name-font-select"] > li:nth-of-type(<?php echo $i++?>) {
+            font-family: '<?php echo $font['name']?>';
+        }
+    <?php endforeach; ?>
+</style>
+

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="catalog_product_view"/>
+    <head>
+        <css src="css/bootstrap.css"/>
+        <css src="Bison_CustomizableProducts::css/select2.min.css"/>
+        <script src="Bison_CustomizableProducts::js/clippingMagic.js"/>
+        <script src="Bison_CustomizableProducts::js/product-view.js"/>
+    </head>
+    <body>
+        <attribute name="class" value="customizable-catalog-product-view"/>
+        <referenceContainer name="main">
+            <block class="Bison\CustomizableProducts\Block\Customizer\Inputs" name="overlay-inputs" template="Bison_CustomizableProducts::product/customizable/overlay/inputs.phtml"/>
+        </referenceContainer>
+        <referenceContainer name="product.info.main">
+            <block class="Bison\CustomizableProducts\Block\Product\View" name="customize-tabs" template="Bison_CustomizableProducts::product/view/tabs.phtml" cacheable="false"/>
+            <block class="Bison\CustomizableProducts\Block\Customizer\Inputs" name="fonts" template="Bison_CustomizableProducts::product/customizable/fonts.phtml"/>
+            <block class="Magento\Framework\View\Element\Template" name="customize" template="Bison_CustomizableProducts::product/customize.phtml" before="-">
+                <block class="Magento\Framework\View\Element\Template" name="customize.menu" as="menu" template="Bison_CustomizableProducts::product/menu.phtml"/>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="product.info.media">
+            <block class="Magento\Catalog\Block\Product\View" name="product.info.media.svg_preview" template="Bison_CustomizableProducts::product/customizable/svg_preview.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Bison\CustomizableProducts\ViewModel\Svg</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+        <referenceBlock name="product.info.addtocart">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">
+                    Bison_CustomizableProducts::product/view/addtocart.phtml
+                </argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="product.info.addtocart.additional">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">
+                    Bison_CustomizableProducts::product/view/addtocart.phtml
+                </argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="product.info.options.select">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">
+                    Bison_CustomizableProducts::product/view/options/type/select.phtml
+                </argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="view.addto.wishlist" remove="true"/>
+        <move element="customize-tabs" destination="product.info.main" after="product.info.addtocart.additional" />
+     </body>
+</page>

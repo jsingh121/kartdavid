@@ -1,0 +1,84 @@
+<?php
+/** @var \Bison\CustomizableProducts\Block\Customizer\Inputs $block */
+
+$numberColors = $block->getNumberColors();
+$numberBackgroundColors = $block->getNumberBackgroundColors();
+?>
+
+<div class="race-number options">
+    <span class="customizable-option-title"><?= __('Number'); ?></span>
+    <div class="row">
+        <div class="items scroll">
+            <div class="tg-list">
+                <div class="tg-list-item">
+                    <span><?= __('Add Race Number'); ?></span>
+                    <input type="checkbox" id="show-number" class="tgl tgl-ios">
+                    <label for="show-number" class="tgl-btn"></label>
+                </div>
+            </div>
+            <div class="race-number col-md-12 col-sm-12 col-lg-12 col-xs-4">
+                <span><?= __('Number'); ?></span>
+            </div>
+            <div class="number-font col-md-12 col-sm-12 col-lg-12 col-xs-4">
+                <span><?= __('Style'); ?></span>
+            </div>
+            <div class="number-color col-md-12 col-sm-12 col-lg-12 col-xs-4" data-rel="number">
+                <span><?= __('Colour'); ?></span>
+            </div>
+            <div class="number-background-color col-md-12 col-sm-12 col-lg-12 col-xs-4" data-rel="number-background">
+                <span><?= __('Background Colour'); ?></span>
+            </div>
+        </div>
+        <div class="color-picker scrollable number">
+            <div class="colors">
+                <?php if ($numberColors): ?>
+                    <?php foreach ($numberColors as $color) : ?>
+                        <?php $colorName = $color->getColorName() ? $color->getColorName() : '#' . $color->getTitle(); ?>
+                        <?php $additionalPrice = $color->getPrice() != 0 ? '+ ' . $block->getCurrentCurrencySymbol() . number_format($color->getPrice(), 2) : '' ?>
+                        <div class="available-colors col-md-3 col-sm-3 col-lg-3 col-xs-3">
+                            <label for="raceNumberColor<?php echo strtoupper($color->getTitle()); ?>">
+                                <div style="background: <?php echo '#'.$color->getTitle() ?>" class="color"></div>
+                                <div class="color-hash" data-color="<?= '#'.strtoupper($color->getTitle()); ?>" data-color-name="<?= $colorName ?>">
+                                    <span><?= $colorName ?></span>
+                                    <small class="additional-price"><?= $additionalPrice ?></small>
+                                </div>
+                            </label>
+                            <input id="raceNumberColor<?php echo strtoupper($color->getTitle()); ?>" type="radio" name="race_number_color" value="<?php echo '#'.$color->getTitle(); ?>" />
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </div>
+        <div class="color-picker scrollable number-background">
+            <div class="colors">
+                <?php if ($numberBackgroundColors): ?>
+                    <?php foreach ($numberBackgroundColors as $color) : ?>
+                        <?php $colorName = $color->getColorName() ? $color->getColorName() : '#' . $color->getTitle(); ?>
+                        <?php $additionalPrice = $color->getPrice() != 0 ? '+ ' . $block->getCurrentCurrencySymbol() . number_format($color->getPrice(), 2) : '' ?>
+                        <div class="available-colors col-md-3 col-sm-3 col-lg-3 col-xs-3">
+                            <label for="numberBackgroundColor<?php echo strtoupper($color->getTitle()); ?>">
+                                <div style="background: <?php echo '#'.$color->getTitle() ?>" class="color"></div>
+                                <div class="color-hash">
+                                    <span><?= $colorName ?></span>
+                                    <small class="additional-price"><?= $additionalPrice ?></small>
+                                </div>
+                            </label>
+                            <input id="numberBackgroundColor<?php echo strtoupper($color->getTitle()); ?>" type="radio" name="number_background" value="<?php echo '#'.$color->getTitle(); ?>" />
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="colors-button">
+            <button type="button" id="number-palette-confirm"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="colors-button">
+            <button type="button" id="number-confirm"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+        </div>
+    </div>
+</div>
+

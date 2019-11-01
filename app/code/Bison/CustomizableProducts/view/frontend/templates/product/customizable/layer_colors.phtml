@@ -1,0 +1,22 @@
+<?php
+/** @var \Bison\CustomizableProducts\Block\Customizer\Inputs $block*/
+$layerId = $block->getRequest()->getParam('layer_id', 1);
+$layerColors = $block->getLayerColors($layerId);
+?>
+<?php if ($layerColors): ?>
+    <?php foreach ($layerColors as $color): ?>
+        <?php $colorName = $color->getColorName() ? $color->getColorName() : '#' . $color->getTitle(); ?>
+        <?php $additionalPrice = $color->getPrice() != 0 ? '+ ' . $block->getCurrentCurrencySymbol() . number_format($color->getPrice(), 2) : '' ?>
+        <div class="available-colors col-md-3 col-sm-3 col-lg-3 col-xs-3 <?php if ($color->getIsFluorescent() === "1"): ?>fluorescent-color<?php endif; ?>">
+             <label for="layerColor<?php echo strtoupper($color->getTitle()); ?>">
+                 <div style="background: <?php echo '#'.$color->getTitle() ?>" class="color"></div>
+                 <div class="color-hash" data-color="<?= '#'.strtoupper($color->getTitle()) ?>" data-color-name="<?= $colorName ?>" data-additional-price="<?= $additionalPrice ?>">
+                     <span><?= $colorName ?></span>
+                     <small class="additional-price"><?= $additionalPrice ?></small>
+                 </div>
+             </label>
+             <input id="layerColor<?php echo strtoupper($color->getTitle()); ?>" type="radio" name="layer_color" value="<?php echo '#'.$color->getTitle(); ?>" />
+         </div>
+    <?php endforeach; ?>
+
+<?php endif; ?>

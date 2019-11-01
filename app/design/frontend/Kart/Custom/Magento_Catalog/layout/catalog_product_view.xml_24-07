@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="mage/gallery/gallery.css"/>
+    </head>
+    <update handle="catalog_product_opengraph" />
+    <update handle="page_calendar"/>
+    <body>
+        <referenceBlock name="product.info.stock.sku" remove="true" />
+        <referenceBlock name="view.addto.compare" remove="true"/>
+        <referenceBlock name="product.info.mailto" remove="true"/>
+        <referenceBlock name="product.info.details" remove="true"/>
+        <referenceBlock name="product.info.overview" remove="true"/>
+        
+        <move element="product.info.review" destination="product.info.main" after="product.info.price"/>
+        <move element="product.info.addto" destination="product.info.main" before="product.info.price"/>
+
+        <referenceContainer name="content">
+             <container name="tabing-content" label="Tabing Content" as="tabing-content" htmlTag="div" htmlClass="tabing-content" >
+                 <container name="dtl-holder" label="Dtl Holder" as="dtl-holder" htmlTag="div" htmlClass="dtl-holder" >
+                     <block class="Magento\Catalog\Block\Product\View" name="pro_tab" template="Magento_Catalog::prodtabs.phtml" after="-"/>
+
+                     <container name="pro-review" label="Product Review" as="pro-review" htmlTag="div" htmlClass="dtl-wrap" htmlId="review-form-container" after="pro_tab">
+                        <block class="Magento\Framework\View\Element\Template" name="review-title" template="Magento_Catalog::reviewtitle.phtml"/>
+                        <container name="dtl-content" label="dtl-content" as="dtl-content" htmlTag="div" htmlClass="dtl-content" after="review-title">
+                            <block class="Magento\Review\Block\Product\Review" name="reviews.tab" as="reviews" template="Magento_Review::review.phtml" group="detailed_info">
+                                <block class="Magento\Review\Block\Product\View\ListView" name="product.info.product_additional_data" as="product_additional_data" template="product/view/list.phtml"/>
+                                <block class="Magento\Theme\Block\Html\Pager" name="product_review_list.toolbar"/>
+                                <block class="Magento\Review\Block\Form" name="product.review.form" as="review_form">
+                                    <arguments>
+                                        <argument name="jsLayout" xsi:type="array">
+                                            <item name="components" xsi:type="array">
+                                                <item name="review-form" xsi:type="array">
+                                                    <item name="component" xsi:type="string">Magento_Review/js/view/review</item>
+                                                </item>
+                                            </item>
+                                        </argument>
+                                    </arguments>
+                                    <container name="product.review.form.fields.before" as="form_fields_before" label="Review Form Fields Before"/>
+                                </block>
+                            </block>
+                        </container>
+                     </container>
+                 </container>
+            </container>
+        </referenceContainer>
+    </body>
+</page>

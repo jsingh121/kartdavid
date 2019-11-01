@@ -1,0 +1,96 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php $_product = $block->getProduct(); ?>
+<?php $buttonTitle = __('Add to Cart'); ?>
+<?php if ($_product->isSaleable()): ?>
+<div class="box-tocart">
+    <div class="fieldset">
+        <?php if ($block->shouldRenderQuantity()): ?>
+<!--        <div class="field qty">
+            <label class="label" for="qty"><span><?= /* @escapeNotVerified */ __('Qty') ?></span></label>
+            <div class="control">
+                <input type="number"
+                       name="qty"
+                       id="qty"
+                       value="<?= /* @escapeNotVerified */ $block->getProductDefaultQty() * 1 ?>"
+                       title="<?= /* @escapeNotVerified */ __('Qty') ?>"
+                       class="input-text qty"
+                       data-validate="<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                       />
+            </div>
+        </div>-->
+        <div class="count_quanity">
+            <input type="text" name="qty" class="input-text qty qtyy" maxlength="12" value="1" title="Qty" min="1"  data-validate="{&quot;required-number&quot;:true,&quot;validate-item-quantity&quot;:{&quot;minAllowed&quot;:1}}">
+            <a href="javascript:void(0)" class="up_btn"><i class="fa fa-caret-up" aria-hidden="true"></i></a>
+            <a href="javascript:void(0)" class="down_btn"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
+        </div>
+        
+        <a class="bodywork" href="#">Unsure what bodywork you have? Click here to help identify your bodywork.</a>
+        
+        <?php $shrtdesc =  $_product->getData('short_description'); ?>
+        <?php if ($shrtdesc): ?>
+            <div class="shortDesc"><?php echo $shrtdesc; ?></div>
+        <?php endif; ?>
+        
+        <?php endif; ?>
+        <div class="actions">
+            <button type="submit"
+                    title="<?= /* @escapeNotVerified */ $buttonTitle ?>"
+                    class="action primary tocart"
+                    id="product-addtocart-button">
+                <span><?= /* @escapeNotVerified */ $buttonTitle ?></span>
+            </button>
+            <?= $block->getChildHtml('', true) ?>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+<?php if ($block->isRedirectToCartEnabled()) : ?>
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/product/view/validation": {
+                "radioCheckboxClosest": ".nested"
+            }
+        }
+    }
+</script>
+<?php else : ?>
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/js/validate-product": {}
+        }
+    }
+</script>
+<?php endif; ?>
+
+<script>
+  require(["jquery"], function($){
+                $(function() {
+                                var flag=1;
+                              $('.product-custom-option').each(function(){
+                                      if (flag){
+                                        
+                                        $('#'+this.id).parent().append('<div class=count_quanity>'+$(".count_quanity").html()+'</div>');
+                                        $(".box-tocart .count_quanity").html('').hide();
+                                        flag=0
+                                      }
+                                      
+                                     
+                              })
+
+                              
+              });
+
+    });
+
+</script>

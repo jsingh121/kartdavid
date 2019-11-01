@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\CustomOptions" type="Bison\CustomizableProducts\Ui\DataProvider\Product\Form\Modifier\CustomOptions" />
+    <type name="Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\CustomOptions">
+        <plugin name="product_custom_option" type="Bison\CustomizableProducts\Plugin\OptionAttribute" sortOrder="10"/>
+    </type>
+    <virtualType name="Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Pool" type="Magento\Ui\DataProvider\Modifier\Pool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="custom-description" xsi:type="array">
+                    <item name="class" xsi:type="string">Bison\CustomizableProducts\Ui\DataProvider\Product\Form\Modifier\Inspirations</item>
+                    <item name="sortOrder" xsi:type="number">130</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Bison\CustomizableProducts\Ui\DataProvider\Product\Form\Modifier\Inspirations">
+        <arguments>
+            <argument name="scopeName" xsi:type="string">product_form.product_form</argument>
+        </arguments>
+    </type>
+</config>

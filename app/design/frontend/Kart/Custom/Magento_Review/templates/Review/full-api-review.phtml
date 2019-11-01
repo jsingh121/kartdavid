@@ -1,0 +1,141 @@
+<?php
+
+$data = file_get_contents('https://api.feefo.com/api/10/reviews/all?merchant_identifier=kartdavid-ltd');
+
+$data = json_decode($data,true);
+
+$count = $data['summary']['meta']['pages'];
+if($count > 1){
+	?>
+	<div class="reivew_html">
+	<h2>Reviews</h2>
+	<?php
+	$result = array();
+	for($i=1;$i<=$count;$i++){
+		$data = '';
+		$url = 'https://api.feefo.com/api/10/reviews/all?merchant_identifier=kartdavid-ltd&page='.$i;
+		$result[$i] = file_get_contents($url);
+	}
+	foreach($result as $resp){
+		$data = '';
+		$data = json_decode($resp,true);
+		?>
+		
+	<?php foreach($data['reviews'] as $k=>$v){	?>
+	<div class="review">
+		<div class="review_top">
+			<div class="col-lg-6">
+				<?php for($i=0; $i < 5; $i++){
+						if($i < $v['service']['rating']['rating']){
+						?>
+						<span class="fa fa-star checked"></span>
+					<?php }else{
+						?>
+						<span class="fa fa-star"></span>
+						<?php
+						}
+				}?>
+				
+			</div>
+			<div class="col-lg-6 rdate">
+				<?php echo date("jS, M Y", strtotime($v['service']['created_at'])); ?>
+			</div>
+		</div>
+		<div class="review_content">
+			<?php echo $v['service']['review']; ?>
+		</div>
+		<div class="review_footer">
+			<div class="col-lg-6"><?php if(isset($v['customer'])){
+				echo $v['customer']['display_name']; 
+			}
+			?></div>
+		</div>
+	</div>
+	<?php } 
+	}
+
+echo "</div>";	
+}else{
+	
+	?>
+	<div class="reivew_html">
+	<h2>Reviews</h2>
+	<?php foreach($data['reviews'] as $k=>$v){	?>
+	<div class="review">
+		<div class="review_top">
+			<div class="col-lg-6">
+				<?php for($i=0; $i < 5; $i++){
+						if($i < $v['service']['rating']['rating']){
+						?>
+						<span class="fa fa-star checked"></span>
+					<?php }else{
+						?>
+						<span class="fa fa-star"></span>
+						<?php
+						}
+				}?>
+				
+			</div>
+			<div class="col-lg-6 rdate">
+				<?php echo date("jS, M Y", strtotime($v['service']['created_at'])); ?>
+			</div>
+		</div>
+		<div class="review_content">
+			<?php echo $v['service']['review']; ?>
+		</div>
+		<div class="review_footer">
+			<div class="col-lg-6"><?php if(isset($v['customer'])){
+				echo $v['customer']['display_name']; 
+			}
+			?></div>
+		</div>
+	</div>
+	<?php } ?>
+	
+</div>
+	<?php
+}
+
+?>
+<style>
+
+.checked{color:#fffc16;}
+.review{
+	width: 45%;
+    float: left;
+    padding: 20px;
+    min-height: 200px;
+    border: 1px solid #eee;
+    margin: 25px;
+    box-shadow: 1px 5px 9px #eee;
+}
+.col-lg-6{ width:50%;float:left;}
+.reivew_html{
+	width:100%;
+	float:left;
+    margin-bottom: 15px;
+	padding-bottom: 25px;
+}
+.rdate{text-align:right;font-size:15px;color:#000;font-weight:600}
+.review_content{
+	padding-top: 10px;
+    float: left;
+    padding-bottom: 10px;
+	color:#000;
+	font-size:20px;
+}
+.review_footer{font-size:15px;font-weight:600;color:#000;font-style:italic;}
+.reivew_html h2{text-align:center;color:#000;}
+
+.review_button{float:left;width:100%;text-align:center;    margin-top: 20px;}
+.review_button a{
+	padding:10px;
+	background:red;
+	color:#000;
+	cursor: pointer;
+    font-size: 20px;
+    border-radius: 5px;
+	text-decoration:none;
+}
+.columns .column{display:none;}
+</style>

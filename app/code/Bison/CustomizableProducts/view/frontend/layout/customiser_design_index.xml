@@ -1,0 +1,18 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <head>
+        <script src="Bison_CustomizableProducts::js/my-account.js"/>
+    </head>
+    <body>
+        <referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">My designs</argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <block class="Bison\CustomizableProducts\Block\MyAccount\View" name="my_designs" template="Bison_CustomizableProducts::account/my_designs.phtml" cacheable="false">
+            </block>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+		
+<!--	 <referenceBlock name="catalog.leftnav" remove="true" />-->
+	 <!--<referenceBlock name="catalog.compare.sidebar" remove="true"/>-->
+         <referenceContainer name="sidebar.additional" remove="true" />
+         <referenceBlock name="breadcrumbs" remove="true" />
+         <referenceBlock name="page.main.title" remove="true" />
+         <referenceBlock name="category.image" remove="true" />
+         <referenceBlock name="category.description" remove="true" />
+         <referenceBlock name="category.product.addto.compare" remove="true" />
+         <referenceBlock name="category.product.addto.wishlist" remove="true" />
+        
+        <referenceContainer name="page.wrapper">
+             <block class="Magento\Framework\View\Element\Template" name="cat_img" template="Magento_Catalog::categoryimage.phtml" after="red.block"/>
+        </referenceContainer>       
+            
+        <referenceContainer name="columns.top">
+            <block class="Magento\Framework\View\Element\Template" name="cat_bro" template="Magento_Catalog::categorybrowse.phtml"/>
+        </referenceContainer>
+        
+        
+        
+        
+<!--        <referenceContainer name="work.with.team">
+            <block class="Magento\Cms\Block\Block" name="WorkWithMXANDKARTING">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">WorkWithMXANDKARTING</argument>
+                </arguments>
+            </block>        
+        </referenceContainer>        
+        <referenceContainer name="content">
+            <container name="work.with.team" as="workwithteam" label="Work With Team" after="category.block.home"/>
+        </referenceContainer>-->
+
+        <referenceContainer name="home.page.static.content">
+            <block class="Magento\Framework\View\Element\Template" name="cat_con" template="Magento_Catalog::categorycontent.phtml"/>      
+        </referenceContainer>        
+        <referenceContainer name="content">
+            <container name="home.page.static.content" as="homepagestaticcontent" label="Home Page Static Content" after="home.page.gallery.mobile"/>
+        </referenceContainer>
+
+<!--        <referenceContainer name="instagram.block">
+            <block class="Magento\Cms\Block\Block" name="InstagramBlock">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">InstagramBlock</argument>
+                </arguments>
+            </block>        
+        </referenceContainer>        
+        <referenceContainer name="content">
+            <container name="instagram.block" as="instagram.block" label="Home Page Instagram" after="home.page.static.content"/>
+        </referenceContainer>-->
+        
+    </body>
+</page>

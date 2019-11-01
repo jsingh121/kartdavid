@@ -1,0 +1,61 @@
+<?php $driverColors = $this->getDriverColors() ?>
+<div class="driver-name options">
+    <span class="customizable-option-title"><?= __('Name');?></span>
+    <div class="row">
+        <div class="items scroll">
+            <div class="tg-list">
+                <div class="tg-list-item">
+                    <span><?= __('Add Driver Name');?></span>
+                    <input type="checkbox" id="show-name" class="tgl tgl-ios">
+                    <label for="show-name" class="tgl-btn"></label>
+                </div>
+            </div>
+            <div class="driver-name col-md-12 col-sm-12 col-lg-12 col-xs-6">
+                <span><?= __('Insert Name'); ?></span>
+            </div>
+            <div class="name-font col-md-12 col-sm-12 col-lg-12 col-xs-6">
+                <span><?= __('Style'); ?></span>
+            </div>
+            <div class="name-color col-md-12 col-sm-12 col-lg-12 col-xs-6">
+                <span><?= __('Colour'); ?></span>
+            </div>
+            <div class="name-position col-md-12 col-sm-12 col-lg-12 col-xs-6">
+                <span><?= __('Position'); ?></span>
+                <select class="position">
+                    <option value="1">First Position</option>
+                    <option value="2">Second Position</option>
+                </select>
+            </div>
+        </div>
+        <div class="color-picker scrollable">
+            <div class="colors">
+            <?php if ($driverColors): ?>
+                <?php foreach ($driverColors as $color) : ?>
+                    <?php $colorName = $color->getColorName() ? $color->getColorName() : '#' . $color->getTitle(); ?>
+                    <?php $additionalPrice = $color->getPrice() != 0 ? '+ ' . $block->getCurrentCurrencySymbol() . number_format($color->getPrice(), 2) : '' ?>
+                    <div class="available-colors col-md-3 col-sm-3 col-lg-3 col-xs-3">
+                        <label for="driverNameColor<?php echo strtoupper($color->getTitle()); ?>">
+                            <div style="background: <?php echo '#'.$color->getTitle() ?>" class="color"></div>
+                            <div class="color-hash">
+                                <span><?= $colorName ?></span>
+                                <small class="additional-price"><?= $additionalPrice ?></small>
+                            </div>
+                        </label>
+                        <input id="driverNameColor<?php echo strtoupper($color->getTitle()); ?>" type="radio" name="driver_name_color" value="<?php echo '#'.$color->getTitle(); ?>" />
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="colors-button">
+            <button type="button" id="driver-palette-confirm"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="colors-button">
+            <button type="button" id="driver-confirm"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+        </div>
+    </div>
+</div>

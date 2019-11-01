@@ -1,0 +1,80 @@
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$customerSession = $objectManager->create('Magento\Customer\Model\Session');
+$customerFactory = $objectManager->get('\Magento\Customer\Model\CustomerFactory')->create();
+
+$customer = $customerFactory->load($customerSession->getCustomer()->getId()); 
+
+$billingAddressId = $customer->getDefaultBilling();
+$address = $objectManager->get('Magento\Customer\Model\AddressFactory')->create()->load($billingAddressId);
+
+$country_Name = $objectManager->create('\Magento\Directory\Model\Country')->load($address->getData('country_id'))->getName();
+?>
+
+<?php $message = $this->getRequest()->getParam('message'); ?>
+  <?php if(!$message):?>
+    <?php if (!$customerSession->isLoggedIn()) { ?>
+    <p class="click_to_login"><a href="<?php echo $this->getUrl('customer/account/login') ?>">Click here</a> to login to automically get your details or enter them below and we’ll send you a free sample pack.</p>
+    <?php } ?>
+
+    <form data-mage-init='{"validation": {}}' action="<?php echo $this->getUrl('freesample/index/save') ?>"  class="form" id="custom-form" method="post" autocomplete="off" enctype="multipart/form-data">
+        <div class="form-group field required">
+          <label for="name">Full name</label>
+          <input type="text" class="form-control input-text" id="name" name="name" value="<?php if ($customerSession->isLoggedIn()) { echo $customerSession->getCustomer()->getName(); } ?>" data-validate="{required:true}">
+        </div>
+        <div class="form-group field required">
+          <label for="input_email">Email address</label>
+          <input type="email" class="form-control input-text" id="input_email" name="email" value="<?php if ($customerSession->isLoggedIn()) { echo $customerSession->getCustomer()->getEmail(); } ?>" data-validate="{required:true, 'validate-email':true}" >
+        </div>
+        <div class="form-group field required">
+          <label for="street">Street</label>
+          <input type="text" class="form-control" id="autocomplete" name="street" value="<?php if ($customerSession->isLoggedIn()) { echo $address->getData('street'); } ?>" data-validate="{required:true}" placeholder="Start typing your address to search">
+        </div>
+        <div class="form-group field required">
+          <label for="city">City</label>
+          <input type="text" class="form-control input-text" id="locality" name="city" value="<?php if ($customerSession->isLoggedIn()) { echo $address->getData('city'); } ?>" data-validate="{required:true}">
+        </div>
+        <div class="form-group field required">
+          <label for="post_code">Postal Code</label>
+          <input type="text" class="form-control input-text" id="postal_code" name="postal_code" value="<?php if ($customerSession->isLoggedIn()) { echo $address->getData('postcode'); } ?>" data-validate="{required:true}">
+        </div>
+        <div class="form-group field required">
+          <label for="country">Country</label>
+          <input type="text" class="form-control input-text" id="country" name="country" value="<?php if ($customerSession->isLoggedIn()) { echo $country_Name; } ?>" data-validate="{required:true}">
+        </div>
+        <input type="hidden" name="status" id="status" value="Pending">
+        <div class="form-group field required">
+          <div class="g-recaptcha" data-sitekey="6Lf-Pr8UAAAAAI9m56ao_gRbwWsr5u2trt8qAc55"></div>
+              <span class='captcha-error validation-advice' style="display: none;"><?php echo 'This is a required field.' ?></span>
+        </div>
+        <button type="submit" class="btn btn-primary" id="form-btn">Send me samples</button>
+    </form>
+  <?php endif; ?>
+    <?php if($message) { ?>
+      <p class="thankyou_text">Thank you</p>
+      <p class="recieved_text"><?php echo $message; ?></p>
+    <?php } ?>
+
+<script type="text/javascript">
+require([
+    'jquery',
+    'mage/mage'
+], function($){
+
+  $("#form-btn").on("click",function(){
+      var dataForm = $('#custom-form');
+      dataForm.mage('validation', {});
+        /*var dataForm = new Validation('custom-form', {immediate : true});
+        dataForm.validate();*/
+        if (grecaptcha.getResponse() == ""){
+           $('.captcha-error').css('display','block');
+           return false;
+        } else {
+          $('.captcha-error').css('display','none');
+          return true;
+        }
+    });
+
+});
+</script>
+<script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>

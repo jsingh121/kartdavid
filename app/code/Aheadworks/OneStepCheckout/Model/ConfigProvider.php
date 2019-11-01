@@ -1,0 +1,174 @@
+<?php
+/**
+ * Copyright 2019 aheadWorks. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+namespace Aheadworks\OneStepCheckout\Model;
+
+use Aheadworks\OneStepCheckout\Model\Cart\ImageProvider;
+use Aheadworks\OneStepCheckout\Model\Cart\OptionsProvider as ItemOptionsProvider;
+use Aheadworks\OneStepCheckout\Model\ConfigProvider\DefaultShippingMethod;
+use Aheadworks\OneStepCheckout\Model\ConfigProvider\PaymentMethodList;
+use Aheadworks\OneStepCheckout\Model\DeliveryDate\ConfigProvider as DeliveryDateConfigProvider;
+use Aheadworks\OneStepCheckout\Model\Newsletter\ConfigProvider as NewsletterConfigProvider;
+use Magento\Checkout\Model\ConfigProviderInterface;
+use Magento\Checkout\Model\Session as CheckoutSession;
+use Magento\Framework\UrlInterface;
+use Magento\Framework\View\LayoutInterface;
+
+/**
+ * Class ConfigProvider
+ * @package Aheadworks\OneStepCheckout\Model
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
+class ConfigProvider implements ConfigProviderInterface
+{
+    /**
+     * @var CheckoutSession
+     */
+    private $checkoutSession;
+
+    /**
+     * @var Config
+     */
+    private $config;
+
+    /**
+     * @var PaymentMethodList
+     */
+    private $paymentMethodsProvider;
+
+    /**
+     * @var NewsletterConfigProvider
+     */
+    private $subscriberConfigProvider;
+
+    /**
+     * @var DeliveryDateConfigProvider
+     */
+    private $deliveryDateConfigProvider;
+
+    /**
+     * @var ImageProvider
+     */
+    private $imageProvider;
+
+    /**
+     * @var ItemOptionsProvider
+     */
+    private $itemOptionsProvider;
+
+    /**
+     * @var DefaultShippingMethod
+     */
+    private $defaultShippingMethodProvider;
+
+    /**
+     * @var UrlInterface
+     */
+    private $urlBuilder;
+    protected $_layout;
+
+    /**
+     * @param CheckoutSession $checkoutSession
+     * @param Config $config
+     * @param PaymentMethodList $paymentMethodsProvider
+     * @param NewsletterConfigProvider $subscriberConfigProvider
+     * @param DeliveryDateConfigProvider $deliveryDateConfigProvider
+     * @param ImageProvider $imageProvider
+     * @param ItemOptionsProvider $itemOptionsProvider
+     * @param DefaultShippingMethod $defaultShippingMethodProvider
+     * @param UrlInterface $urlBuilder
+     */
+    public function __construct(
+        CheckoutSession $checkoutSession,
+        Config $config,
+        PaymentMethodList $paymentMethodsProvider,
+        NewsletterConfigProvider $subscriberConfigProvider,
+        DeliveryDateConfigProvider $deliveryDateConfigProvider,
+        ImageProvider $imageProvider,
+        ItemOptionsProvider $itemOptionsProvider,
+        DefaultShippingMethod $defaultShippingMethodProvider,
+        UrlInterface $urlBuilder,
+        LayoutInterface $layout
+    ) {
+        $this->checkoutSession = $checkoutSession;
+        $this->config = $config;
+        $this->paymentMethodsProvider = $paymentMethodsProvider;
+        $this->subscriberConfigProvider = $subscriberConfigProvider;
+        $this->deliveryDateConfigProvider = $deliveryDateConfigProvider;
+        $this->imageProvider = $imageProvider;
+        $this->itemOptionsProvider = $itemOptionsProvider;
+        $this->defaultShippingMethodProvider = $defaultShippingMethodProvider;
+        $this->urlBuilder = $urlBuilder;
+        $this->_layout = $layout;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfig()
+    {
+        $quoteId = $this->checkoutSession->getQuoteId();
+        $quote = $this->checkoutSession->getQuote();
+        $cmsBlockId = 'norton-image-on-checkout';
+        $shippingmethodcmsBlockId = 'shipping_method_text';
+        $billinginfocmsBlockId = 'billing_info_text';
+        $contactinfocmsBlockId = 'contactinfo_title';
+        $termsandprivacycmsBlockId = 'termsandprivacy_text';
+        $cmsblockcustomlink = 'cms_block_custom_link';
+        $config = [
+            'cms_block_message' => $this->_layout->createBlock('Magento\Cms\Block\Block')->setBlockId($cmsBlockId)->toHtml(),
+            'cms_block_message_shipping' => $this->_layout->createBlock('Magento\Cms\Block\Block')->setBlockId($shippingmethodcmsBlockId)->toHtml(),
+            'cms_block_message_billing' => $this->_layout->createBlock('Magento\Cms\Block\Block')->setBlockId($billinginfocmsBlockId)->toHtml(),
+            'cms_block_message_contactinfo' => $this->_layout->createBlock('Magento\Cms\Block\Block')->setBlockId($contactinfocmsBlockId)->toHtml(),
+            'cms_block_message_termsandprivacy' => $this->_layout->createBlock('Magento\Cms\Block\Block')->setBlockId($termsandprivacycmsBlockId)->toHtml(),
+            'cms_block_custom_link' => $this->_layout->createBlock('Magento\Cms\Block\Block')->setBlockId($cmsblockcustomlink)->toHtml(),
+            'sameAsShippingFlag' => $this->config->isBillingShippingAreTheSame($quote->getStore()->getWebsiteId()),
+            'paymentMethods' => $this->paymentMethodsProvider->getPaymentMethods($quoteId),
+            'newsletterSubscribe' => $this->subscriberConfigProvider->getConfig(),
+            'isOrderNoteEnabled' => $this->config->isOrderNoteEnabled(),
+            'isMiniCartExpanded' => $this->config->isMiniCartExpanded(),
+            'deliveryDate' => $this->deliveryDateConfigProvider->getConfig(),
+            'editableItemOptions' => $this->itemOptionsProvider->getOptionsData($quoteId),
+            'itemImageData' => $this->imageProvider->getConfigImageData($quoteId),
+            'trustSeals' => [
+                'isEnabled' => $this->config->isTrustSealsBlockEnabled(),
+                'label' => $this->config->getTrustSealsLabel(),
+                'text' => $this->config->getTrustSealsText(),
+                'badges' => $this->config->getTrustSealsBadges()
+            ],
+            'defaultRedirectOnEmptyQuoteUrl' => $this->getDefaultRedirectOnEmptyQuoteUrl(),
+            'googleAutocomplete' => [
+                'apiKey' => $this->config->getGooglePlacesApiKey()
+            ],
+            'optionsPostUrl' => $this->urlBuilder->getUrl('onestepcheckout/index/optionspost')
+        ];
+        $defaultShippingMethod = $this->defaultShippingMethodProvider->getShippingMethod();
+        if (!empty($defaultShippingMethod)) {
+            $config['defaultShippingMethod'] = $defaultShippingMethod;
+        }
+        if ($this->config->getDefaultPaymentMethod()) {
+            $config['defaultPaymentMethod'] = $this->config->getDefaultPaymentMethod();
+        }
+        if ($quote->getIsVirtual()) {
+            unset($config['paymentMethods']);
+        }
+        return $config;
+    }
+
+    /**
+     * Retrieve default redirect on empty quote page URL
+     *
+     * @return string
+     */
+    private function getDefaultRedirectOnEmptyQuoteUrl()
+    {
+        $url = $this->checkoutSession->getContinueShoppingUrl(true);
+        if (!$url) {
+            $url = $this->urlBuilder->getUrl();
+        }
+        return $url;
+    }
+}

@@ -1,0 +1,143 @@
+/* start home graphics */
+.graphics:hover{
+    box-shadow: 1px 1px 5px #e4002b !important;
+}
+
+.graphics a:hover{
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* end home graphics */
+
+/* start mobile */
+@media (max-width: 600px){
+    
+/* Mobile heading sizes */
+.design_banner h2, .heading_banner h2 {
+    white-space: nowrap !important;
+    font-size: 2em !important;
+}
+
+/* Instagram feed size */
+.eapps-instagram-feed-posts-item{
+    width: 100% !important;
+}
+
+/*Detail pages header formatting on mobile */
+.heading_banner p.review-top {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    margin-top:25px !important;
+}
+.heading_banner{
+    padding: 10px 0px !important;
+    width: 100% !important;
+}
+
+.request_form_feild{
+    width:100% !important;
+    display: block !important;
+    margin-top: 10px !important;
+}
+.requesr_btn{
+    position: relative !important;
+    display: block !important;
+    top: 20px !important;
+    width: 100% !important;
+}
+.request_form{
+    display: block !important;
+    width: 100% !important;
+    padding-right: 0px !important;
+}
+.features_col{
+    width: 100% !important;
+}
+
+/*cat menus */
+/** border between menu items**/ 
+
+.graphics-link ul li::after {
+    width: 1px !important;
+} 
+ 
+.graphics-link ul li {
+    width: auto !important;
+    padding: 0 10px !important;
+    margin: 6px 0px !important;
+    display: inline-block !important;
+    font-size: 15px !important;
+}
+ 
+.graphics-link ul li a {
+    display: inline-block !important;
+    padding: 0px !important;
+    border: solid 0px #ccc !important;
+    background: #fff !important;
+} 
+ 
+/** for hover menu **/ 
+.graphics-link ul li a:hover {
+    background: #ffff !important;
+    color: #E4002B !important;
+}
+
+/*Set the category buttons*/ 
+ 
+.page-layout-1column .filter-options-item {
+    width:100% !important; /* Set the width*/
+    margin: 15px 13% 15px !important;/*Margin width*/
+} 
+/* end cat menus */
+}
+/* end mobile */
+
+/* Form */
+
+.supernova{
+    background: #ffffff !important;
+}
+
+/* End form */
+
+/*Product page */
+
+/* To Remove the thumbnails over the product*/ 
+ 
+.fotorama__nav-wrap.fotorama__nav-wrap--horizontal {
+    bottom: 0px !important; /*Set to 0px*/
+    
+} 
+
+/*Remove the Arrow on Hover*/ 
+
+.fotorama__arr{
+    display: none !important;
+}
+
+.fotorama__arr .fotorama__arr__arr {
+    display: none  !important; /*make the display as none*/
+}
+
+/** color option and colors on the same line**/
+.swatch-attribute-label {
+    font-weight: normal !important;
+    float: left !important;
+    display: inline-block !important;
+} 
+ 
+.swatch-attribute-options {
+    padding: 0 10px !important;
+    display: inline-block !important;
+}
+
+/*Increase the size of Color Options*/ 
+ 
+.product-info-main .swatch-option {
+    height: 75px !important; /*Set the height of the box*/
+    width: 75px !important; /*Set the width of the box*/
+    background-size: contain !important;
+} 
+/* end product page */

@@ -1,0 +1,34 @@
+<?php
+/** @var \Magento\Catalog\Block\Product\View $block */
+$product = $block->getProduct();
+
+/** @var Bison\CustomizableProducts\ViewModel\Svg $viewModel */
+$viewModel = $block->getViewModel();
+?>
+<div class="svg">
+    <div class="svg_preview container-fluid" id="svgComponentContainer"  data-bind="scope: 'svgDesigner'">
+        <?php echo $block->getBodyworkSvg($product); ?>
+    </div>
+    <i class="zoom-control fa fa-search-plus" aria-hidden="true"></i>
+    <i class="zoom-control fa fa-search-minus" aria-hidden="true"></i>
+    <div class="customizer-actions row">
+        <div class="customize-red-button col-xs-10">
+            <button type="button" id="customization-done" title="<?= __('Done') ?>">
+                <?= __('Done'); ?>
+            </button>
+        </div>
+        <div class="customize-white-button start-over-button col-xs-2">
+            <button type="button" id="startOverButton" title="<?= __('Start Over') ?>">
+                <i class="fa fa-refresh"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="loader">
+    <img src="<?php echo $block->getViewFileUrl('Bison_CustomizableProducts/css/img/loader.gif');?>">
+</div>
+<input type="hidden" id="resizeNwImagePath" value="<?php echo $block->getViewFileUrl('Bison_CustomizableProducts/css/img/resize-nw.png');?>">
+<input type="hidden" id="resizeNeImagePath" value="<?php echo $block->getViewFileUrl('Bison_CustomizableProducts/css/img/resize-ne.png');?>">
+<script>
+    window.cmApiId = <?php echo $viewModel->getApiId();?>;
+</script>

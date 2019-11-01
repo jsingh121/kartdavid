@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Quote\Model\Quote\Item\ToOrderItem">
+        <plugin name="generated_svg_to_order_item" type="Bison\CustomizableProducts\Plugin\Quote\GeneratedSvgToOrderItem"/>
+    </type>
+    <preference for="Magento\Quote\Model\Quote\Item" type="Bison\CustomizableProducts\Model\Quote\Quote\Item"/>
+    <preference for="Magento\Checkout\Model\Cart\ImageProvider" type="Bison\CustomizableProducts\Model\Cart\ImageProvider"/>
+    <type name="\Magento\Checkout\Model\Cart">
+        <plugin name="add-bundle-products-separate" type="Bison\CustomizableProducts\Plugin\Checkout\Model\AddProductToCart" sortOrder="1"/>
+    </type>
+    <type name="Magento\Checkout\CustomerData\AbstractItem">
+        <plugin name="change-product-image-in-minicart" type="Bison\CustomizableProducts\Plugin\Minicart\Image" sortOrder="1"/>
+    </type>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="bison_logo_category_listing_data_source" xsi:type="string">Bison\CustomizableProducts\Model\ResourceModel\Category\Grid\Collection</item>
+                <item name="bison_logo_listing_data_source" xsi:type="string">Bison\CustomizableProducts\Model\ResourceModel\Logo\Grid\Collection</item>
+
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Bison\CustomizableProducts\Model\ResourceModel\Category\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">customizer_logo_category</argument>
+            <argument name="resourceModel" xsi:type="string">Bison\CustomizableProducts\Model\ResourceModel\LogoCategory</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Bison\CustomizableProducts\Model\ResourceModel\Logo\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">customizer_predefined_logo</argument>
+            <argument name="resourceModel" xsi:type="string">Bison\CustomizableProducts\Model\ResourceModel\PredefinedLogo</argument>
+        </arguments>
+    </virtualType>
+
+    <preference for="Magento\CatalogImportExport\Model\Import\Product\Option" type="Bison\CustomizableProducts\Model\CatalogImportExport\Import\Product\Option"/>
+</config>

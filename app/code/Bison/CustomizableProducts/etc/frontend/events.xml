@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="layout_load_before">
+        <observer name="load_custom_handler" instance="Bison\CustomizableProducts\Observer\LayoutLoadBefore" />
+    </event>
+    <event name="checkout_cart_product_add_after">
+        <observer name="quote_item_save_svg" instance="Bison\CustomizableProducts\Observer\SaveGeneratedSvgToQuoteItem" />
+    </event>
+    <event name="customer_register_success">
+        <observer name="register_save_user_designs" instance="Bison\CustomizableProducts\Observer\CustomerRegisterSuccess" />
+    </event>
+    <event name="customer_customer_authenticated">
+        <observer name="login_save_user_designs" instance="Bison\CustomizableProducts\Observer\CustomerLoginSuccess" />
+    </event>
+    <event name="checkout_cart_add_product_complete">
+        <observer name="customcart_go_to_checkout" instance="Bison\CustomizableProducts\Observer\GoToCustomCart" />
+    </event>
+</config>

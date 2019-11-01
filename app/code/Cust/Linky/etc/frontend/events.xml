@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    
+    <event name="page_block_html_topmenu_gethtml_before">
+        <observer name="cust_linky_observer" instance="Cust\Linky\Observer\Topmenu" />
+    </event>
+
+<!--     <event name="controller_action_predispatch_customer_account_logout">
+        <observer name="cust_linky_presignout_observer" instance="Cust\Linky\Observer\CustomerPreLogOutObserver" />
+    </event> -->
+
+    <event name="controller_action_postdispatch_customer_account_logout">
+        <observer name="cust_linky_postsignout_observer" instance="Cust\Linky\Observer\CustomerPostLogOutObserver" />
+    </event>
+
+
+</config>

@@ -1,0 +1,46 @@
+<div class="customizable-options container"><?= $block->getChildHtml('', true) ?></div>
+<div id="logoSelector"></div>
+
+<div id="infoPopup">
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="text-center main-info">
+                <?php echo __('To make your logo look great on your design you can remove any unwanted background or colours, in a few simple steps.'); ?>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-6 step">
+            <div class="image-container">
+                <img class="img-responsive" src="<?php echo $this->getViewFileUrl('Bison_CustomizableProducts::images/step1.png'); ?>" />
+            </div>
+            <p class="text-center">
+                <?php echo __('Use the green tool to select the areas you want to keep.'); ?>
+            </p>
+        </div>
+        <div class="col-xs-12 col-md-6 step">
+            <div class="image-container">
+                <img class="img-responsive" src="<?php echo $this->getViewFileUrl('Bison_CustomizableProducts::images/step2.png'); ?>" />
+            </div>
+            <p class="text-center">
+                <?php echo __('Use the red tool to select the areas you want to remove.');?><br /><?php echo __('You will have a preview on the right.'); ?>
+            </p>
+        </div>
+        <div class="col-xs-12 col-md-6 step">
+            <div class="image-container">
+                <img class="img-responsive" src="<?php echo $this->getViewFileUrl('Bison_CustomizableProducts::images/step3.png'); ?>" />
+            </div>
+            <p class="text-center">
+                <?php echo __('Once you are happy, click Done.'); ?>
+            </p>
+        </div>
+        <div class="col-xs-12 col-md-6 step">
+            <div class="image-container">
+                <img class="img-responsive" src="<?php echo $this->getViewFileUrl('Bison_CustomizableProducts::images/step4.png'); ?>" />
+            </div>
+            <p class="text-center">
+                <?php echo __('For more instructions click the help button in the top right.'); ?>
+            </p>
+        </div>
+    </div>
+</div>

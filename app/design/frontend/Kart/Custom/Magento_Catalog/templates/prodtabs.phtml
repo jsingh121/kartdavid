@@ -1,0 +1,36 @@
+<?php 
+       $product = $block->getProduct();
+		
+		$shpdly =  $product->getData('shippingdelivery');		
+		$desc =  $product->getData('description');
+		
+?>
+
+    
+    
+		  			
+			<?php if($desc): ?>
+		    <div class="dtl-wrap">
+		      <div class="dtl-title">Product Details<span> </span></div>
+		      <div class="dtl-content"><?php echo $desc; ?></div>
+		      <!--end dtl-content--> 
+		      <!--end row--> 		      
+		    </div>
+			<?php endif; ?>
+			
+			<?php if($shpdly){ ?>
+			    <div class="dtl-wrap">
+			      <div class="dtl-title">Shipping & Delivery<span></span></div>
+			      <div class=" dtl-content"><?php echo $shpdly; ?></div>
+			      <!--end dtl-content--> 
+			      <!--end row-->       
+			    </div>
+		  	<?php } else { ?>
+			  	<div class="dtl-wrap">
+			      <div class="dtl-title">Shipping & Delivery<span></span></div>
+			      <div class=" dtl-content"><?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('shipping_delivery_tab')->toHtml(); ?></div>
+			      <!--end dtl-content--> 
+			      <!--end row-->       
+			    </div>
+		  	<?php	} ?>			
+			

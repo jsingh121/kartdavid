@@ -1,0 +1,7 @@
+<?php
+$_product = $block->getProduct();
+?>
+<?php $shrtdesc =  $_product['short_description']; ?>
+<?php if ($shrtdesc): ?>
+    <div class="customShortDesc"><?php echo $shrtdesc; ?></div>
+<?php endif;?>

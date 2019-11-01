@@ -1,0 +1,46 @@
+<?php 
+   $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+   $category = $objectManager->get('Magento\Framework\Registry')->registry('current_category');//get current category
+
+   $catId = $category->getId();
+?>
+
+<?php 
+
+          $blckid = "CategoryContent"."_".$catId;
+          $contnt = $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId($blckid)->toHtml();
+          
+          
+          $blckPopid = "CategoryPopular"."_".$catId;
+          $contntPop = $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId($blckPopid)->toHtml();
+          
+          if(!empty($contntPop))
+	          {
+	               echo $contntPop;
+	          }
+
+
+          $workwithcontnt = $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('WorkWithMXANDKARTING')->toHtml();
+          if(!empty($workwithcontnt) && !empty($contnt))
+	          {
+	         	echo $workwithcontnt;
+	          }
+
+	      
+          if(!empty($contnt))
+	          {
+	      		echo $contnt;
+	          }
+
+
+	  $instacontnt = $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('InstagramBlock')->toHtml();
+          if(!empty($instacontnt) && !empty($contnt))
+	          {
+	      		echo $instacontnt;
+	          }
+?>
+
+
+
+
+
